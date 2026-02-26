@@ -1,19 +1,23 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
-const connectDB = require("./config/db");
-
-// Sozlamalar
-dotenv.config();
-connectDB();
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 const app = express();
-app.use(express.json());
-app.use(cors());
 
-// Marshrutilar (Routes)
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Routerni ulash
 app.use("/api/categories", require("./routes/categoryRoutes"));
-app.use("/api/products", require("./routes/productRoutes"));
+// app.use("/api/products", require("./routes/productRoutes"));
+
+// MongoDB ulanishi
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB ulandi"))
+  .catch((err) => console.log("Xato:", err));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server ${PORT}-portda ishlamoqda`));
+app.listen(PORT, () => console.log(`${PORT}-portda ishladi`));

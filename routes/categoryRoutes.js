@@ -1,5 +1,3 @@
-// routes/categoryRoutes.js faylini tekshiring va yangilang:
-
 const express = require("express");
 const router = express.Router();
 const {
@@ -8,8 +6,9 @@ const {
   deleteCategory,
 } = require("../controllers/categoryController");
 
+// Marshrutlar
 router.get("/", getCategories);
 router.post("/", createCategory);
-router.delete("/:id", deleteCategory); // SHU QATORNI QO'SHING
+router.delete("/:id", deleteCategory);
 
 module.exports = router;
