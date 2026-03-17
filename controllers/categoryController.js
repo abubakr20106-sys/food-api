@@ -11,7 +11,7 @@ const getCategories = async (req, res) => {
   }
 };
 
-// 2. Kategoriya yaratish (routerda createCategory deb nomlangan)
+// 2. Kategoriya yaratish
 const createCategory = async (req, res) => {
   try {
     const newCat = new Category({ name: req.body.name });
@@ -22,7 +22,27 @@ const createCategory = async (req, res) => {
   }
 };
 
-// 3. Kategoriyani o'chirish
+// 3. Kategoriyani tahrirlash ✅ YANGI
+const updateCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updated = await Category.findByIdAndUpdate(
+      id,
+      { name: req.body.name },
+      { new: true },
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: "Kategoriya topilmadi" });
+    }
+
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// 4. Kategoriyani o'chirish
 const deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -41,9 +61,9 @@ const deleteCategory = async (req, res) => {
   }
 };
 
-// EKSPORT (Eng muhim joyi - ismlar routerdagiga mos bo'lsin)
 module.exports = {
   getCategories,
   createCategory,
+  updateCategory,
   deleteCategory,
 };
