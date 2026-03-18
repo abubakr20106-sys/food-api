@@ -7,7 +7,6 @@ const {
   deleteCategory,
 } = require("../controllers/categoryController");
 
-// Marshrutlar
 router.get("/", getCategories);
 router.post("/", createCategory);
 router.put("/:id", updateCategory);
